@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form"
 import Error from "./Error"
+import type { DraftPatient } from "../types"
 
 export default function PatientForm() {
   
-  const  { register, handleSubmit, formState: { errors } } = useForm()
+  const  { register, handleSubmit, formState: { errors } } = useForm<DraftPatient>()
 
 
-  const registerPatient = () => {
-    console.log('Nuevo Paciente')
+  const registerPatient = (data: DraftPatient) => {
+    console.log(data)
   }
 
   return (
@@ -90,7 +91,13 @@ export default function PatientForm() {
                     id="date"
                     className="w-full p-3  border border-gray-100"
                     type="date"
+                    {...register('date',{
+                      required: 'La Fecha debe ser Válida',
+                    })}
                 />
+                  {errors.date && (
+                    <Error>{errors.date?.message?.toString()}</Error>
+                  )}
             </div>
             
             <div className="mb-5">
@@ -101,7 +108,13 @@ export default function PatientForm() {
                     id="symptoms"
                     className="w-full p-3  border border-gray-100"
                     placeholder="Síntomas del paciente"
-                ></textarea>
+                    {...register('symptoms',{
+                      required: 'Debe ingresar al menos un Sintoma',
+                    })}
+                    />
+                  {errors.symptoms && (
+                    <Error>{errors.symptoms?.message?.toString()}</Error>
+                  )}
             </div>
 
             <input
@@ -109,7 +122,7 @@ export default function PatientForm() {
                 className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
                 value='Guardar Paciente'
             />
-        </form> 
+        </form>
     </div>
   )
 }
