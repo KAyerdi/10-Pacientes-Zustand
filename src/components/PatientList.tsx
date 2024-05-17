@@ -1,4 +1,5 @@
 import { usePatientStore } from "../store"
+import PatientDetails from "./PatientDetails"
 
 export default function PatientList() {
 
@@ -9,7 +10,21 @@ export default function PatientList() {
   return (
     <div className="md:w-1/2 lg:3/5 md:h-screen overflow-y-scroll">
       {patients.length ? (
-        <p>Si hay Pacientes</p>
+        <>
+        <h2 className="font-black text-3xl text-center">Listado de Pacientes</h2>
+        <p className="text-xl mt-5 mb-10 text-center">
+          Adminitra tus {''}
+          <span className="text-indigo-600 font-bold">
+            Pacientes y Citas
+          </span>
+        </p>
+        {patients.map (patient => (
+          <PatientDetails
+            key={patient.id}
+            patient={patient}
+          />
+        ))}
+        </>
       ) : (
         <>
         <h2 className="font-black text-3xl text-center">
